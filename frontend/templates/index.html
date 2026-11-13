@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
     <title>Tetris Game</title>
   </head>
 
   <body>
     <header>
       <h1>俄羅斯方塊</h1>
-      <p class="hint1">最高分數:</p>
+      <p class="hint1">最高分數:(未統計)</p>
     </header>
     <div id="game-info"></div>
     <div id="grid-area">
@@ -21,6 +24,10 @@
       <div class="piece" id="piece2"></div>
       <div class="piece" id="piece3"></div>
     </div>
-    <script src="./js/script.js"></script>
+    <!-- 載入 js -->
+    <script
+      src="{{ url_for('static', filename='js/main.js') }}"
+      type="module"
+    ></script>
   </body>
 </html>

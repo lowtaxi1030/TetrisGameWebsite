@@ -1,0 +1,17 @@
+:root {
+  --main-text-color: #dcffa4;
+  --hint-text-color: #9b9b9b;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #200054;
+  color: var(--main-text-color);
+  align-items: center;
+  text-align: center;
+}
+
+.hint1 {
+  color: var(--hint-text-color);
+}
