@@ -73,12 +73,12 @@ requestAnimationFrame(draw);
 function drawBoard(grid, gridSize) {
   for (let r = 0; r < grid.length; r++) {
     for (let c = 0; c < grid[r].length; c++) {
-      let x = c * gridSize;
       let y = r * gridSize;
+      let x = c * gridSize;
       let color = grid[r][c] ?? config.EMPTY_COLOR;
       let borderColor =
         grid[r][c] === null ? config.BORDER_COLOR : config.PIECE_BORDER_COLOR;
-      drawCell([x, y], gridSize, color, borderColor);
+      drawCell([y, x], gridSize, color, borderColor);
     }
   }
 }
@@ -86,20 +86,28 @@ function drawBoard(grid, gridSize) {
 /**
  * 繪製單一格子。
  *
- * @param {number[]} startPos - [x, y]，網頁座標，單位 px
+ * @param {number[]} startPos - [y, x]，網頁座標，單位 px
  * @param {number} gridSize - 格子的寬度與高度，單位 px
  * @param {number[]} gridColor - [R, G, B]，每個值為 0～255
  */
-function drawCell(startPos, gridSize, gridColor, borderColor = null) {
+function drawCell(
+  startPos,
+  gridSize,
+  gridColor,
+  borderColor = null,
+  alpha = 1.0,
+) {
   ctx.save();
+  ctx.globalAlpha = alpha;
   ctx.fillStyle = config.arrayToRGB(gridColor);
-  ctx.fillRect(startPos[0], startPos[1], gridSize, gridSize);
+  ctx.fillRect(startPos[1], startPos[0], gridSize, gridSize);
   ctx.restore();
 
   if (borderColor !== null) {
     ctx.save();
+    ctx.globalAlpha = alpha;
     ctx.strokeStyle = config.arrayToRGB(borderColor);
-    ctx.strokeRect(startPos[0], startPos[1], gridSize, gridSize);
+    ctx.strokeRect(startPos[1], startPos[0], gridSize, gridSize);
     ctx.restore();
   }
 }
@@ -110,21 +118,16 @@ function drawPlacementHint() {
     return;
   }
 
+  const pieceData = state.pieces.find((p) => p.id === state.selectedPieceId);
   const [y, x] = getPlacementPosition();
-
   placementHint = {
     position: [y, x],
     isValid: isValidPlacement(state.grid, pieceData, [y, x]),
   };
 
-  ctx.save();
-
-  ctx.globalAlpha = 0.4;
   const hintColor = placementHint.isValid ? [0, 255, 0] : [255, 0, 0];
   const gridSize = config.getGridSize(state.grid);
-  drawPiece(pieceData, [x * gridSize, y * gridSize], gridSize, hintColor);
-
-  ctx.restore();
+  drawPiece(pieceData, [y * gridSize, x * gridSize], gridSize, 0.4, hintColor);
 }
 
 export let piecePositions = [];
@@ -134,18 +137,19 @@ function drawPieces(pieces) {
   let pieceSize = config.getGridSize(state.grid) * 0.8;
   const areaWidth = canvas.width / pieces.length;
   for (let i = 0; i < pieces.length; i++) {
+    let isBeingDrag =
+      state.isDragging && pieces[i].id === state.selectedPieceId;
     const [pieceWidth, pieceHeight] = config.getPieceSize(pieces[i], pieceSize);
-    let x = i * areaWidth + (areaWidth - pieceWidth) / 2;
     let y = config.getPiecesCenterY(state.grid) - pieceHeight / 2;
-    let startPos = [x, y];
+    let x = i * areaWidth + (areaWidth - pieceWidth) / 2;
+    let startPos = [y, x];
     piecePositions.push({
       id: pieces[i].id,
-      x: startPos[0],
-      y: startPos[1],
+      position: startPos,
       width: pieceWidth,
       height: pieceHeight,
     });
-    drawPiece(pieces[i], startPos, pieceSize);
+    drawPiece(pieces[i], startPos, pieceSize, isBeingDrag ? 0.4 : 1.0);
   }
 }
 
@@ -153,19 +157,20 @@ function drawPiece(
   piece,
   startPos,
   gridSize,
+  alpha = 1.0,
   gridColor = null,
   borderColor = null,
 ) {
   for (let i = 0; i < piece.shape.length; i++) {
     let pos = piece.shape[i];
-    const x = startPos[0] + pos[1] * gridSize;
-    const y = startPos[1] + pos[0] * gridSize;
+    const y = startPos[0] + pos[0] * gridSize;
+    const x = startPos[1] + pos[1] * gridSize;
     drawCell(
-      [x, y],
+      [y, x],
       gridSize,
       gridColor ?? piece.color,
       borderColor ?? config.PIECE_BORDER_COLOR,
-      config.PIECE_BORDER_COLOR,
+      alpha,
     );
   }
 }
@@ -183,7 +188,7 @@ function drawPreview(pieces) {
     ];
     drawPiece(
       pieceData,
-      [state.mousePos[0] - pieceWidth / 2, state.mousePos[1] - pieceHeight / 2],
+      [state.mousePos[1] - pieceHeight / 2, state.mousePos[0] - pieceWidth / 2],
       config.getGridSize(state.grid),
     );
   }

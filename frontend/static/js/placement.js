@@ -23,11 +23,12 @@ export function getPlacementPosition() {
     pieceData,
     config.getGridSize(state.grid),
   );
-  const column = Math.round(
-    (state.mousePos[0] - pieceWidth / 2) / config.getGridSize(state.grid),
-  );
+  const gridSize = config.getGridSize(state.grid);
   const row = Math.round(
-    (state.mousePos[1] - pieceHeight / 2) / config.getGridSize(state.grid),
+    (state.mousePos[1] - pieceHeight / 2) / gridSize,
+  );
+  const column = Math.round(
+    (state.mousePos[0] - pieceWidth / 2) / gridSize,
   );
 
   return [row, column];

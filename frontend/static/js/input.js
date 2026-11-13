@@ -8,10 +8,10 @@ export function handleMouseDown(event) {
   for (let i = 0; i < piecePositions.length; i++) {
     const piece = piecePositions[i];
     if (
-      piece.x < event.offsetX &&
-      event.offsetX < piece.x + piece.width &&
-      piece.y < event.offsetY &&
-      event.offsetY < piece.y + piece.height
+      piece.position[1] < event.offsetX &&
+      event.offsetX < piece.position[1] + piece.width &&
+      piece.position[0] < event.offsetY &&
+      event.offsetY < piece.position[0] + piece.height
     ) {
       state.selectedPieceId = piece.id;
       state.mousePos = [event.offsetX, event.offsetY];
@@ -37,6 +37,6 @@ export async function handleMouseUp(event) {
 }
 
 async function handlePlacePiece() {
-  const [x, y] = getPlacementPosition();
+  const [y, x] = getPlacementPosition();
   await placePiece(state.selectedPieceId, [y, x]);
 }
