@@ -59,6 +59,8 @@ export function draw(gameState) {
   drawPieces(gameState.pieces);
   drawPreview(gameState.pieces);
 
+  drawGameOver();
+
   requestAnimationFrame(() => draw(gameState));
 }
 
@@ -192,4 +194,9 @@ function drawPreview(pieces) {
       config.getGridSize(state.grid),
     );
   }
+}
+
+const gameOverElement = document.getElementById("game-over");
+function drawGameOver() {
+  gameOverElement.style.display = state.isGameOver ? "flex" : "none";
 }

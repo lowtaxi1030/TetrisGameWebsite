@@ -1,9 +1,11 @@
 import { fetchGameData as fetchGameData } from "./api.js";
 import { draw } from "./renderer.js";
 import { state, updateBackendState } from "./gameState.js";
-import { handleMouseDown, handleMouseMove, handleMouseUp } from "./input.js";
+import { handleMouseDown, handleMouseMove, handleMouseUp, handleResetGame } from "./input.js";
 
 const canvas = document.getElementById("game-board");
+
+const resetButton = document.getElementById("reset-button");
 
 function setupInput() {
   canvas.addEventListener("mousedown", handleMouseDown);
@@ -11,6 +13,8 @@ function setupInput() {
   canvas.addEventListener("mousemove", handleMouseMove);
 
   canvas.addEventListener("mouseup", handleMouseUp);
+
+  resetButton.addEventListener("click", handleResetGame)
 }
 
 setupInput();

@@ -1,6 +1,8 @@
 :root {
   --main-text-color: #dcffa4;
   --hint-text-color: #9b9b9b;
+  --text-dark: #454545;
+  --text-light: #dedede;
 }
 
 body {
@@ -14,4 +16,58 @@ body {
 
 .hint1 {
   color: var(--hint-text-color);
+}
+
+#game-container {
+  position: relative;
+  width: fit-content;
+}
+
+#game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 10;
+
+  display: none;
+  background: rgba(0, 0, 0, 0.65);
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button1 {
+  color: var(--text-light);
+  background-color: #fc2104;
+
+  font-size: 16px;
+  padding: 10px 30px;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button1:hover {
+  color: var(--text-light);
+  background-color: #fc0442;
+  transform: scale(1.05);
+}
+
+.button1:active {
+  color: var(--text-light);
+  background-color: #1d04fc;
+  transform: scale(0.95);
+}
+
+.button1:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

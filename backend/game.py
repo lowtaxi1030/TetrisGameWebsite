@@ -70,9 +70,22 @@ class Game:
         self.is_game_over = self.check_game_over()
 
     def _generate_pieces(self):
-        # 確保不會無限變長
-        patterns = random.choices(piece.PIECE_PATTERN, k=self.pieces_per_turn)
-        self.pieces = [piece.Piece(id, p, tool.Colors.WHITE) for id, p in enumerate(patterns)]
+        weights = [piece.PIECE_WEIGHT_BY_SIZE[len(p)] for p in piece.PIECE_PATTERN]
+
+        patterns = random.choices(
+            piece.PIECE_PATTERN,
+            weights=weights,
+            k=self.pieces_per_turn,
+        )
+
+        self.pieces = [
+            piece.Piece(
+                id,
+                piece.rotate_pattern(p, random.randrange(4)),
+                tool.Colors.WHITE,
+            )
+            for id, p in enumerate(patterns)
+        ]
 
     def check_game_over(self) -> bool:
         return all(

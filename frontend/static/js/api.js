@@ -1,12 +1,21 @@
 import { updateBackendState } from "./gameState.js";
 
-export async function fetchGameData() {
-  const response = await fetch("/api/game");
+async function fetchJSON(url, options = {}) {
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    throw new Error(`HTTP Error: ${response.status}`);
+  }
+
   return await response.json();
 }
 
+export async function fetchGameData() {
+  return fetchJSON("/api/game");
+}
+
 export async function placePiece(pieceId, startPos) {
-  const response = await fetch("/api/place", {
+  const responseDict = await fetchJSON("/api/place", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +25,7 @@ export async function placePiece(pieceId, startPos) {
       start_pos: startPos,
     }),
   });
-  const responseDict = await response.json();
+  // const responseDict = await response.json();
   if (responseDict.success_to_place) {
     updateBackendState(
       responseDict.grid,
@@ -25,4 +34,8 @@ export async function placePiece(pieceId, startPos) {
       responseDict.is_game_over,
     );
   }
+}
+
+export async function reset() {
+  return fetchJSON("/api/reset", { method: "POST" });
 }

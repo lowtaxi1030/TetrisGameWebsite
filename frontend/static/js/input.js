@@ -1,9 +1,11 @@
 import { piecePositions } from "./renderer.js";
-import { state } from "./gameState.js";
-import { placePiece } from "./api.js";
+import { state, updateBackendState } from "./gameState.js";
+import * as api from "./api.js";
 import { getPlacementPosition } from "./placement.js";
 
 export function handleMouseDown(event) {
+  if (state.isGameOver) return;
+
   console.log(event.offsetX, event.offsetY);
   for (let i = 0; i < piecePositions.length; i++) {
     const piece = piecePositions[i];
@@ -22,12 +24,16 @@ export function handleMouseDown(event) {
 }
 
 export function handleMouseMove(event) {
+  if (state.isGameOver) return;
+
   if (!state.isDragging) return;
 
   state.mousePos = [event.offsetX, event.offsetY];
 }
 
 export async function handleMouseUp(event) {
+  if (state.isGameOver) return;
+
   if (!state.isDragging) return;
 
   await handlePlacePiece();
@@ -38,5 +44,23 @@ export async function handleMouseUp(event) {
 
 async function handlePlacePiece() {
   const [y, x] = getPlacementPosition();
-  await placePiece(state.selectedPieceId, [y, x]);
+  await api.placePiece(state.selectedPieceId, [y, x]);
+}
+
+export async function handleResetGame() {
+  try {
+    await api.reset();
+
+    const gameData = await api.fetchGameData();
+
+    updateBackendState(
+      gameData.grid,
+      gameData.score,
+      gameData.pieces,
+      gameData.is_game_over,
+    );
+  } catch (error) {
+    console.error("重置遊戲失敗：", error);
+    alert("重置遊戲失敗，請稍後再試！");
+  }
 }

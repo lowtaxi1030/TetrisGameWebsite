@@ -10,7 +10,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 
 app = flask.Flask(__name__, template_folder=FRONTEND_DIR / "templates", static_folder=FRONTEND_DIR / "static")
-game = Game(12, 12)
+game = Game(8, 8)
+
 
 # 註冊路由
 @app.route("/")
