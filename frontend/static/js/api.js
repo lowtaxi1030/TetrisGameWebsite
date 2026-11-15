@@ -15,6 +15,7 @@ export async function fetchGameData() {
 }
 
 export async function placePiece(pieceId, startPos) {
+  let t1 = performance.now();
   const responseDict = await fetchJSON("/api/place", {
     method: "POST",
     headers: {
@@ -35,6 +36,9 @@ export async function placePiece(pieceId, startPos) {
       responseDict.highest_score,
     );
   }
+  let end_t1 = performance.now();
+  console.log(end_t1 - t1);
+  return responseDict.success_to_place;
 }
 
 export async function reset() {

@@ -7,6 +7,7 @@ export const state = {
   highestScore: 0,
 
   // 前端操作資料
+  pendingPlacement: null,
   selectedPieceId: null,
   isDragging: false,
   mousePos: [0, 0],

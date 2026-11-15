@@ -58,6 +58,7 @@ export function draw() {
   displayHighestScore();
   displayScore();
   drawBoard(state.grid, config.getGridSize(state.grid));
+  drawPendingPlacement();
   drawPlacementHint();
   drawPieces(state.pieces);
   drawPreview(state.pieces);
@@ -123,6 +124,25 @@ function drawCell(
     ctx.strokeRect(startPos[1], startPos[0], gridSize, gridSize);
     ctx.restore();
   }
+}
+
+function drawPendingPlacement() {
+  if (!state.pendingPlacement) return;
+
+  const { pieceId, startPos } = state.pendingPlacement;
+
+  const piece = state.pieces.find((p) => p.id === pieceId);
+  if (!piece) return;
+
+  drawPiece(
+    piece,
+    [
+      startPos[0] * config.getGridSize(state.grid),
+      config.getOffsetX() + startPos[1] * config.getGridSize(state.grid),
+    ],
+    config.getGridSize(state.grid),
+    0.5,
+  );
 }
 
 function drawPlacementHint() {

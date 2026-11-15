@@ -44,7 +44,17 @@ export async function handleMouseUp(event) {
 
 async function handlePlacePiece() {
   const [y, x] = getPlacementPosition();
-  await api.placePiece(state.selectedPieceId, [y, x]);
+
+  state.pendingPlacement = {
+    pieceId: state.selectedPieceId,
+    startPos: [y, x],
+  };
+
+  try {
+    const success = await api.placePiece(state.selectedPieceId, [y, x]);
+  } finally {
+    state.pendingPlacement = null;
+  }
 }
 
 export async function handleResetGame() {
@@ -58,7 +68,7 @@ export async function handleResetGame() {
       gameData.score,
       gameData.pieces,
       gameData.is_game_over,
-      gameData.highestScore,
+      gameData.highest_score,
     );
   } catch (error) {
     console.error("重置遊戲失敗：", error);
