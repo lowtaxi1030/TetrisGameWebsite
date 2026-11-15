@@ -1,14 +1,13 @@
-import * as colors from "./colors.js"
+export const BOARD_WIDTH = 350;
+export const CANVAS_WIDTH = 450;
+export const CANVAS_HEIGHT = 600;
 
-export const CANVAS_WIDTH = 350;
-export const CANVAS_HEIGHT = 500;
-
-export const EMPTY_COLOR = [20, 0, 50];
-export const BORDER_COLOR = colors.white;
-export const PIECE_BORDER_COLOR = colors.gold;
+export function getOffsetX() {
+  return Math.floor((CANVAS_WIDTH - BOARD_WIDTH) / 2);
+}
 
 export function getGridSize(grid) {
-  return Math.floor(CANVAS_WIDTH / grid[0].length);
+  return Math.floor(BOARD_WIDTH / grid[0].length);
 }
 
 export function getPiecesCenterY(grid) {

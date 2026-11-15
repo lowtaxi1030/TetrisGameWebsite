@@ -39,12 +39,12 @@ class Board:
                 return False
         return True
 
-    def place(self, start_pos: tuple[int, int], shape: list[tuple[int, int]], color: tuple[int, int, int]):
+    def place(self, start_pos: tuple[int, int], shape: list[tuple[int, int]], style: str):
         if not self.can_place(start_pos, shape):
             raise ValueError("Cannot place shape at the specified position")
         true_poses = self._get_true_poses(start_pos, shape)
         for r, c in true_poses:
-            self.set_cell(r, c, color)
+            self.set_cell(r, c, style)
 
     def _get_full_rows(self):
         # 檢查橫排

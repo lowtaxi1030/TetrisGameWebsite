@@ -45,3 +45,31 @@ export const lightGray = [200, 200, 200];
 // Basic
 export const white = [255, 255, 255];
 export const black = [0, 0, 0];
+
+// Indigo
+export const indigo = [57, 73, 171];
+export const lightIndigo = [159, 168, 218];
+
+// Teal
+export const teal = [0, 137, 123];
+export const lightTeal = [128, 203, 196];
+
+// Coral
+export const coral = [216, 67, 21];
+export const lightCoral = [255, 171, 145];
+
+// Extra Blue
+export const skyBlue = [3, 169, 244];
+export const deepBlue = [13, 71, 161];
+
+// Extra Purple
+export const violet = [123, 31, 162];
+export const lavender = [206, 147, 216];
+
+// Extra Pink
+export const rose = [233, 30, 99];
+export const lightRose = [244, 143, 177];
+
+// Extra Orange
+export const deepOrange = [230, 81, 0];
+export const lightOrange = [255, 204, 128];

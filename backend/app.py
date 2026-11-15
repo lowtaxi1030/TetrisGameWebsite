@@ -4,13 +4,17 @@ from pathlib import Path
 
 import flask
 
+from . import config
+from . import database as db
 from .game import Game
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 
 app = flask.Flask(__name__, template_folder=FRONTEND_DIR / "templates", static_folder=FRONTEND_DIR / "static")
-game = Game(8, 8)
+game = Game(config.GRID_SIZE, config.GRID_SIZE)
+
+db.init_db()
 
 
 # 註冊路由
@@ -26,6 +30,7 @@ def get_game():
         "score": game.score,
         "pieces": [p.to_dict() for p in game.pieces],
         "is_game_over": game.is_game_over,
+        "highest_score": db.get_highest_score(config.GRID_SIZE),
     }
 
 
@@ -39,8 +44,14 @@ def get_game_state():
 @app.route("/api/place", methods=["POST"])
 def place_piece():
     """放置方塊"""
+
     result = flask.request.get_json()
-    return {"success_to_place": game.place_piece(result["piece_id"], tuple(result["start_pos"])), **get_game()}
+
+    success = game.place_piece(result["piece_id"], tuple(result["start_pos"]))
+
+    db.update_highest_score(config.GRID_SIZE, game.score)
+
+    return {"success_to_place": success, **get_game()}
 
 
 @app.route("/api/reset", methods=["POST"])

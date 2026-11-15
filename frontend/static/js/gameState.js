@@ -4,6 +4,7 @@ export const state = {
   score: 0,
   pieces: [],
   isGameOver: false,
+  highestScore: 0,
 
   // 前端操作資料
   selectedPieceId: null,
@@ -11,9 +12,16 @@ export const state = {
   mousePos: [0, 0],
 };
 
-export function updateBackendState(grid, score, pieces, isGameOver) {
+export function updateBackendState(
+  grid,
+  score,
+  pieces,
+  isGameOver,
+  highestScore,
+) {
   state.grid = grid;
   state.score = score;
   state.pieces = pieces;
   state.isGameOver = isGameOver;
+  state.highestScore = highestScore;
 }

@@ -32,6 +32,7 @@ export async function placePiece(pieceId, startPos) {
       responseDict.score,
       responseDict.pieces,
       responseDict.is_game_over,
+      responseDict.highest_score,
     );
   }
 }

@@ -58,6 +58,7 @@ export async function handleResetGame() {
       gameData.score,
       gameData.pieces,
       gameData.is_game_over,
+      gameData.highestScore,
     );
   } catch (error) {
     console.error("重置遊戲失敗：", error);

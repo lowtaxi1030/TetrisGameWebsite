@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import random
 
-from backend import piece, tool
+from backend import piece  # , tool
 
 from .board import Board
 
@@ -34,7 +34,7 @@ class Game:
             return False
 
         # 4. 呼叫 board.place() 放置方塊
-        self.board.place(start_pos, current_piece.shape, current_piece.color)
+        self.board.place(start_pos, current_piece.shape, current_piece.style)
 
         # 5. 呼叫 board.clear_full_lines() 清除完整行列
         cleared_rows, cleared_cols = self.board.clear_full_lines()
@@ -78,11 +78,12 @@ class Game:
             k=self.pieces_per_turn,
         )
 
+
         self.pieces = [
             piece.Piece(
                 id,
                 piece.rotate_pattern(p, random.randrange(4)),
-                tool.Colors.WHITE,
+                random.choice(list(piece.PIECE_STYLE)),
             )
             for id, p in enumerate(patterns)
         ]

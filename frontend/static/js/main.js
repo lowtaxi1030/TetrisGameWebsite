@@ -27,6 +27,7 @@ async function main() {
     serverData.score,
     serverData.pieces,
     serverData.is_game_over,
+    serverData.highest_score,
   );
 
   draw(state);

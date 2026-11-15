@@ -2,6 +2,7 @@ import * as config from "./config.js";
 import { state } from "./gameState.js";
 import { isValidPlacement } from "./placement.js";
 import { getPlacementPosition } from "./placement.js";
+import { pieceStyle } from "./pieceStyle.js";
 
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
@@ -51,20 +52,32 @@ function drawShape(startPos, poses) {
   ctx.fill();
 }
 
-export function draw(gameState) {
+export function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawBoard(gameState.grid, config.getGridSize(state.grid));
+  displayHighestScore();
+  displayScore();
+  drawBoard(state.grid, config.getGridSize(state.grid));
   drawPlacementHint();
-  drawPieces(gameState.pieces);
-  drawPreview(gameState.pieces);
+  drawPieces(state.pieces);
+  drawPreview(state.pieces);
 
   drawGameOver();
 
-  requestAnimationFrame(() => draw(gameState));
+  requestAnimationFrame(() => draw(state));
 }
 
 requestAnimationFrame(draw);
+
+const highestScoreDisplay = document.getElementById("highest-score");
+function displayHighestScore() {
+  highestScoreDisplay.textContent = `最高分數：${state.highestScore}`;
+}
+
+const scoreDisplay = document.getElementById("score-display");
+function displayScore() {
+  scoreDisplay.textContent = `分數：${state.score}`;
+}
 
 /**
  * 繪製整個遊戲棋盤。
@@ -76,11 +89,9 @@ function drawBoard(grid, gridSize) {
   for (let r = 0; r < grid.length; r++) {
     for (let c = 0; c < grid[r].length; c++) {
       let y = r * gridSize;
-      let x = c * gridSize;
-      let color = grid[r][c] ?? config.EMPTY_COLOR;
-      let borderColor =
-        grid[r][c] === null ? config.BORDER_COLOR : config.PIECE_BORDER_COLOR;
-      drawCell([y, x], gridSize, color, borderColor);
+      let x = c * gridSize + config.getOffsetX();
+      const style = pieceStyle[grid[r][c]] ?? pieceStyle.empty;
+      drawCell([y, x], gridSize, style.color, style.borderColor);
     }
   }
 }
@@ -123,13 +134,19 @@ function drawPlacementHint() {
   const pieceData = state.pieces.find((p) => p.id === state.selectedPieceId);
   const [y, x] = getPlacementPosition();
   placementHint = {
-    position: [y, x],
+    position: [y, x + config.getOffsetX()],
     isValid: isValidPlacement(state.grid, pieceData, [y, x]),
   };
 
   const hintColor = placementHint.isValid ? [0, 255, 0] : [255, 0, 0];
   const gridSize = config.getGridSize(state.grid);
-  drawPiece(pieceData, [y * gridSize, x * gridSize], gridSize, 0.4, hintColor);
+  drawPiece(
+    pieceData,
+    [y * gridSize, x * gridSize + config.getOffsetX()],
+    gridSize,
+    0.4,
+    hintColor,
+  );
 }
 
 export let piecePositions = [];
@@ -163,6 +180,7 @@ function drawPiece(
   gridColor = null,
   borderColor = null,
 ) {
+  const style = pieceStyle[piece.style] ?? pieceStyle.default;
   for (let i = 0; i < piece.shape.length; i++) {
     let pos = piece.shape[i];
     const y = startPos[0] + pos[0] * gridSize;
@@ -170,8 +188,8 @@ function drawPiece(
     drawCell(
       [y, x],
       gridSize,
-      gridColor ?? piece.color,
-      borderColor ?? config.PIECE_BORDER_COLOR,
+      gridColor ?? style.color,
+      borderColor ?? style.borderColor,
       alpha,
     );
   }

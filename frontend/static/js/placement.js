@@ -28,7 +28,7 @@ export function getPlacementPosition() {
     (state.mousePos[1] - pieceHeight / 2) / gridSize,
   );
   const column = Math.round(
-    (state.mousePos[0] - pieceWidth / 2) / gridSize,
+    ((state.mousePos[0] - config.getOffsetX()) - pieceWidth / 2) / gridSize,
   );
 
   return [row, column];
