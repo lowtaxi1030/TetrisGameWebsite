@@ -217,7 +217,7 @@ PIECES = [
         "shape": [(1, 0), (0, 0), (0, 1), (0, 2), (1, 2)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 5,
+        "min_grid_size": 4,
         "enabled": True,
     },
     {
