@@ -1,5 +1,6 @@
 export const state = {
   // 後端遊戲資料
+  gameId: "",
   grid: [],
   score: 0,
   pieces: [],

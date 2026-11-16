@@ -2,7 +2,7 @@ class Board:
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
-        self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
+        self.grid: list[list[None | str]] = [[None for _ in range(self.cols)] for _ in range(self.rows)]
 
     def _check_bounds(self, row, col, return_type="Error"):
         """return_type: 'Error' or 'Boolean'"""

@@ -1,7 +1,15 @@
 import { updateBackendState } from "./gameState.js";
 
 async function fetchJSON(url, options = {}) {
-  const response = await fetch(url, options);
+  const gameId = localStorage.getItem("game_id");
+  const finalOptions = {
+    ...options,
+    headers: {
+      ...options.headers,
+      "X-Game-ID": gameId,
+    },
+  };
+  const response = await fetch(url, finalOptions);
 
   if (!response.ok) {
     throw new Error(`HTTP Error: ${response.status}`);
@@ -11,11 +19,10 @@ async function fetchJSON(url, options = {}) {
 }
 
 export async function fetchGameData() {
-  return fetchJSON("/api/game");
+  return fetchJSON("/api/game", {});
 }
 
 export async function placePiece(pieceId, startPos) {
-  let t1 = performance.now();
   const responseDict = await fetchJSON("/api/place", {
     method: "POST",
     headers: {
@@ -36,8 +43,6 @@ export async function placePiece(pieceId, startPos) {
       responseDict.highest_score,
     );
   }
-  let end_t1 = performance.now();
-  console.log(end_t1 - t1);
   return responseDict.success_to_place;
 }
 
