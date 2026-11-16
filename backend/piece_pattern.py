@@ -39,7 +39,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (0, 2)],
         "weight": 9,
         "difficulty": 1,
-        "min_grid_size": 2,
+        "min_grid_size": 3,
         "enabled": True,
     },
     {
@@ -137,7 +137,7 @@ PIECES = [
         "shape": [(0, 1), (1, 0), (1, 1), (1, 2), (2, 1)],
         "weight": 4,
         "difficulty": 2,
-        "min_grid_size": 1,
+        "min_grid_size": 3,
         "enabled": True,
     },
     {
@@ -145,7 +145,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
@@ -153,7 +153,7 @@ PIECES = [
         "shape": [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
@@ -161,7 +161,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 4,
         "enabled": True,
     },
     {
@@ -169,7 +169,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (1, 0), (1, 1), (1, 2)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 4,
         "enabled": True,
     },
     {
@@ -177,7 +177,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (1, 1), (2, 1), (2, 2)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 4,
         "enabled": True,
     },
     {
@@ -185,7 +185,7 @@ PIECES = [
         "shape": [(2, 0), (2, 1), (1, 1), (0, 1), (0, 2)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 4,
         "enabled": True,
     },
     {
@@ -193,23 +193,23 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (1, 1), (1, 2), (2, 2)],
         "weight": 4,
         "difficulty": 4,
-        "min_grid_size": 1,
+        "min_grid_size": 4,
         "enabled": True,
     },
     {
-        "id": "corner_5_a",
+        "id": "corner_5",
         "shape": [(2, 0), (1, 0), (0, 0), (0, 1), (0, 2)],
         "weight": 4,
         "difficulty": 2,
-        "min_grid_size": 1,
+        "min_grid_size": 3,
         "enabled": True,
     },
     {
-        "id": "corner_5_b",
+        "id": "corner_5_rev",
         "shape": [(2, 2), (1, 2), (0, 2), (0, 1), (0, 0)],
         "weight": 4,
         "difficulty": 2,
-        "min_grid_size": 1,
+        "min_grid_size": 3,
         "enabled": True,
     },
     {
@@ -217,7 +217,7 @@ PIECES = [
         "shape": [(1, 0), (0, 0), (0, 1), (0, 2), (1, 2)],
         "weight": 4,
         "difficulty": 3,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
@@ -225,7 +225,7 @@ PIECES = [
         "shape": [(0, 2), (1, 2), (2, 2), (1, 1), (1, 0)],
         "weight": 3,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     # ==================== 6 格 ====================
@@ -234,7 +234,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2)],
         "weight": 4,
         "difficulty": 2,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
@@ -242,7 +242,7 @@ PIECES = [
         "shape": [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0)],
         "weight": 4,
         "difficulty": 4,
-        "min_grid_size": 1,
+        "min_grid_size": 6,
         "enabled": True,
     },
     {
@@ -250,15 +250,23 @@ PIECES = [
         "shape": [(0, 0), (1, 0), (2, 0), (3, 0), (2, 1)],
         "weight": 4,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
         "id": "big_l_6",
-        "shape": [(0, 0), (1, 0), (2, 0), (3, 0), (3, 1), (3, 2)],
+        "shape": [(0, 0), (1, 0), (2, 0), (3, 0), (0, 1), (0, 2)],
         "weight": 4,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
+        "enabled": True,
+    },
+    {
+        "id": "big_l_6_rev",
+        "shape": [(0, 1), (0, 2), (0, 3), (1, 3), (2, 3), (3, 3)],
+        "weight": 4,
+        "difficulty": 5,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
@@ -266,7 +274,7 @@ PIECES = [
         "shape": [(0, 0), (1, 0), (2, 0), (1, 1), (1, 2), (2, 2)],
         "weight": 4,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 6,
         "enabled": True,
     },
     # ==================== 7 格 ====================
@@ -275,7 +283,7 @@ PIECES = [
         "shape": [(1, 0), (0, 1), (1, 1), (2, 1), (0, 2), (1, 2), (2, 2)],
         "weight": 2,
         "difficulty": 4,
-        "min_grid_size": 1,
+        "min_grid_size": 5,
         "enabled": True,
     },
     {
@@ -283,7 +291,7 @@ PIECES = [
         "shape": [(3, 0), (3, 1), (3, 2), (3, 3), (2, 1), (1, 1), (0, 1)],
         "weight": 2,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 8,
         "enabled": True,
     },
     {
@@ -291,7 +299,7 @@ PIECES = [
         "shape": [(3, 0), (3, 1), (3, 2), (3, 3), (2, 2), (1, 2), (0, 2)],
         "weight": 2,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 8,
         "enabled": True,
     },
     # ==================== 8 格 ====================
@@ -300,7 +308,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1), (2, 2)],
         "weight": 2,
         "difficulty": 5,
-        "min_grid_size": 1,
+        "min_grid_size": 8,
         "enabled": True,
     },
     # ==================== 9 格 ====================
@@ -309,7 +317,7 @@ PIECES = [
         "shape": [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)],
         "weight": 1,
         "difficulty": 6,
-        "min_grid_size": 1,
+        "min_grid_size": 10,
         "enabled": True,
     },
 ]
