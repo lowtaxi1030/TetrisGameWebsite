@@ -8,11 +8,11 @@ const canvas = document.getElementById("game-board");
 const resetButton = document.getElementById("reset-button");
 
 function setupInput() {
-  canvas.addEventListener("mousedown", handleMouseDown);
+  canvas.addEventListener("pointdown", handleMouseDown);
 
-  canvas.addEventListener("mousemove", handleMouseMove);
+  canvas.addEventListener("pointmove", handleMouseMove);
 
-  canvas.addEventListener("mouseup", handleMouseUp);
+  canvas.addEventListener("pointup", handleMouseUp);
 
   resetButton.addEventListener("click", handleResetGame)
 }

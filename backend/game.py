@@ -4,7 +4,9 @@ import random
 
 from backend import piece  # , tool
 
+from . import config
 from .board import Board
+from .piece_pattern import PIECES
 
 
 class Game:
@@ -70,14 +72,14 @@ class Game:
         self.is_game_over = self.check_game_over()
 
     def _generate_pieces(self):
-        weights = [piece.PIECE_WEIGHT_BY_SIZE[len(p)] for p in piece.PIECE_PATTERN]
+        weights = [p["weight"] for p in PIECES if config.GRID_SIZE >= p["min_grid_size"]]
+        shapes = [p["shape"] for p in PIECES if config.GRID_SIZE >= p["min_grid_size"]]
 
         patterns = random.choices(
-            piece.PIECE_PATTERN,
+            shapes,
             weights=weights,
             k=self.pieces_per_turn,
         )
-
 
         self.pieces = [
             piece.Piece(

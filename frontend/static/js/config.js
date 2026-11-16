@@ -1,6 +1,6 @@
-export const BOARD_WIDTH = 350;
-export const CANVAS_WIDTH = 450;
-export const CANVAS_HEIGHT = 600;
+export const BOARD_WIDTH = 500;
+export const CANVAS_WIDTH = 600;
+export const CANVAS_HEIGHT = 700;
 
 export function getOffsetX() {
   return Math.floor((CANVAS_WIDTH - BOARD_WIDTH) / 2);
