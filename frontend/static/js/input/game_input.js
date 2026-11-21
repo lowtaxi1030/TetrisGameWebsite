@@ -3,6 +3,7 @@ import { state } from "../gameState.js";
 import * as api from "../api.js";
 import { getPlacementPosition } from "../placement.js";
 
+const canvas = document.getElementById("game-board");
 export function handleMouseDown(event) {
   if (state.game.isGameOver) return;
 
@@ -16,6 +17,8 @@ export function handleMouseDown(event) {
       state.selectedPieceId = piece.id;
       state.mousePos = [event.offsetX, event.offsetY];
       state.isDragging = true;
+
+      canvas.setPointerCapture(event.pointerId);
       break;
     }
   }
