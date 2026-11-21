@@ -11,10 +11,16 @@ const gridSize =
   Number.isInteger(savedGridSize) && savedGridSize > 0 ? savedGridSize : 15;
 
 function setupInputs() {
+  //電腦
   canvas.addEventListener("pointerdown", input.handleMouseDown);
   canvas.addEventListener("pointermove", input.handleMouseMove);
   canvas.addEventListener("pointerup", input.handleMouseUp);
   canvas.addEventListener("pointercancel", input.handleMouseUp);
+  //手機
+  canvas.addEventListener("touchstart", input.handleMouseDown);
+  canvas.addEventListener("touchmove", input.handleMouseMove);
+  canvas.addEventListener("touchend", input.handleMouseUp);
+  canvas.addEventListener("touchcancel", input.handleMouseUp);
   resetButton.addEventListener("click", input.handleResetGame);
 }
 
