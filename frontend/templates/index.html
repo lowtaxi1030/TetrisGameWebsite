@@ -2,39 +2,42 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
+      href="{{ url_for('static', filename='css/common.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
     />
     <title>Tetris Game</title>
   </head>
 
   <body>
     <header>
-      <h1>俄羅斯方塊</h1>
-      <p id="highest-score" class="hint1">最高分數：0</p>
+      <h1 class="title">俄羅斯方塊</h1>
+      <p class="text2">TETRIS GAME</p>
+      <main>
+        <nav id="main-menu">
+          <button class="big-button" id="start-button">開始遊戲</button>
+          <button class="big-button" id="settings-button">設定</button>
+        </nav>
+        <section id="highest-scores">
+          <h2 id="score-list-title">最高分紀錄</h2>
+          <div id="score-list">
+            <!-- 由 JavaScript 動態填入紀錄 -->
+          </div>
+        </section>
+      </main>
     </header>
-    <div id="game-info">
-      <p id="score-display" class="text">分數：</p>
-    </div>
-    <div id="game-container">
-      <canvas id="game-board"></canvas>
 
-      <div id="piece-area">
-        <div class="piece" id="piece1"></div>
-        <div class="piece" id="piece2"></div>
-        <div class="piece" id="piece3"></div>
-      </div>
-
-      <div id="game-over">
-        <h2 id="game-over-title">Game Over</h2>
-        <button id="reset-button" class="button1">重來</button>
-      </div>
-    </div>
     <!-- 載入 js -->
     <script
-      src="{{ url_for('static', filename='js/main.js') }}"
+      src="{{ url_for('static', filename='js/index.js') }}"
       type="module"
     ></script>
   </body>

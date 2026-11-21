@@ -57,18 +57,16 @@ export function draw() {
 
   displayHighestScore();
   displayScore();
-  drawBoard(state.grid, config.getGridSize(state.grid));
+  drawBoard(state.game.board.grid, config.getGridSize(state.game.board.grid));
   drawPendingPlacement();
   drawPlacementHint();
-  drawPieces(state.pieces);
-  drawPreview(state.pieces);
+  drawPieces(state.game.pieces);
+  drawPreview(state.game.pieces);
 
   drawGameOver();
 
-  requestAnimationFrame(() => draw(state));
+  requestAnimationFrame(() => draw());
 }
-
-requestAnimationFrame(draw);
 
 const highestScoreDisplay = document.getElementById("highest-score");
 function displayHighestScore() {
@@ -77,7 +75,7 @@ function displayHighestScore() {
 
 const scoreDisplay = document.getElementById("score-display");
 function displayScore() {
-  scoreDisplay.textContent = `分數：${state.score}`;
+  scoreDisplay.textContent = `分數：${state.game.score}`;
 }
 
 /**
@@ -131,16 +129,17 @@ function drawPendingPlacement() {
 
   const { pieceId, startPos } = state.pendingPlacement;
 
-  const piece = state.pieces.find((p) => p.id === pieceId);
+  const piece = state.game.pieces.find((p) => p.id === pieceId);
   if (!piece) return;
 
   drawPiece(
     piece,
     [
-      startPos[0] * config.getGridSize(state.grid),
-      config.getOffsetX() + startPos[1] * config.getGridSize(state.grid),
+      startPos[0] * config.getGridSize(state.game.board.grid),
+      config.getOffsetX() +
+        startPos[1] * config.getGridSize(state.game.board.grid),
     ],
-    config.getGridSize(state.grid),
+    config.getGridSize(state.game.board.grid),
     0.5,
   );
 }
@@ -151,15 +150,17 @@ function drawPlacementHint() {
     return;
   }
 
-  const pieceData = state.pieces.find((p) => p.id === state.selectedPieceId);
+  const pieceData = state.game.pieces.find(
+    (p) => p.id === state.selectedPieceId,
+  );
   const [y, x] = getPlacementPosition();
   placementHint = {
     position: [y, x + config.getOffsetX()],
-    isValid: isValidPlacement(state.grid, pieceData, [y, x]),
+    isValid: isValidPlacement(state.game.board.grid, pieceData, [y, x]),
   };
 
   const hintColor = placementHint.isValid ? [0, 255, 0] : [255, 0, 0];
-  const gridSize = config.getGridSize(state.grid);
+  const gridSize = config.getGridSize(state.game.board.grid);
   drawPiece(
     pieceData,
     [y * gridSize, x * gridSize + config.getOffsetX()],
@@ -173,13 +174,13 @@ export let piecePositions = [];
 
 function drawPieces(pieces) {
   piecePositions = [];
-  let pieceSize = config.getGridSize(state.grid) * 0.8;
+  let pieceSize = Math.min(config.getGridSize(state.game.board.grid) * 0.8, 35);
   const areaWidth = canvas.width / pieces.length;
   for (let i = 0; i < pieces.length; i++) {
     let isBeingDrag =
       state.isDragging && pieces[i].id === state.selectedPieceId;
     const [pieceWidth, pieceHeight] = config.getPieceSize(pieces[i], pieceSize);
-    let y = config.getPiecesCenterY(state.grid) - pieceHeight / 2;
+    let y = config.getPiecesCenterY(state.game.board.grid) - pieceHeight / 2;
     let x = i * areaWidth + (areaWidth - pieceWidth) / 2;
     let startPos = [y, x];
     piecePositions.push({
@@ -229,12 +230,12 @@ function drawPreview(pieces) {
     drawPiece(
       pieceData,
       [state.mousePos[1] - pieceHeight / 2, state.mousePos[0] - pieceWidth / 2],
-      config.getGridSize(state.grid),
+      config.getGridSize(state.game.board.grid),
     );
   }
 }
 
 const gameOverElement = document.getElementById("game-over");
 function drawGameOver() {
-  gameOverElement.style.display = state.isGameOver ? "flex" : "none";
+  gameOverElement.style.display = state.game.isGameOver ? "flex" : "none";
 }

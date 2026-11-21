@@ -18,17 +18,17 @@ export function isValidPlacement(grid, piece, startPos) {
 }
 
 export function getPlacementPosition() {
-  const pieceData = state.pieces.find((p) => p.id === state.selectedPieceId);
+  const pieceData = state.game.pieces.find(
+    (p) => p.id === state.selectedPieceId,
+  );
   const [pieceWidth, pieceHeight] = config.getPieceSize(
     pieceData,
-    config.getGridSize(state.grid),
+    config.getGridSize(state.game.board.grid),
   );
-  const gridSize = config.getGridSize(state.grid);
-  const row = Math.round(
-    (state.mousePos[1] - pieceHeight / 2) / gridSize,
-  );
+  const gridSize = config.getGridSize(state.game.board.grid);
+  const row = Math.round((state.mousePos[1] - pieceHeight / 2) / gridSize);
   const column = Math.round(
-    ((state.mousePos[0] - config.getOffsetX()) - pieceWidth / 2) / gridSize,
+    (state.mousePos[0] - config.getOffsetX() - pieceWidth / 2) / gridSize,
   );
 
   return [row, column];

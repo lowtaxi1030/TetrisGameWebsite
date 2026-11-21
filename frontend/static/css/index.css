@@ -1,0 +1,50 @@
+.title {
+  font-size: 90px;
+  margin: 10px -10px;
+}
+
+#main-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 2px solid rgb(136, 19, 232);
+  border-radius: 10px;
+}
+
+#start-button {
+  background: linear-gradient(to right, #15ff00, #a6ff00);
+}
+
+#start-button:hover {
+  background: linear-gradient(to right, #eeff00, #ffbf00);
+  transform: scale(1.05);
+}
+
+#start-button:active {
+  background: linear-gradient(to right, #00fffb, #4253c2);
+  transform: scale(0.95);
+}
+
+#settings-button {
+  color: var(--text-light);
+  background: linear-gradient(to right, #ff0040, #a81ab8);
+}
+
+#settings-button:hover {
+  background: linear-gradient(to right, #ff0000, #ff4800);
+  transform: scale(1.05);
+}
+
+#settings-button:active {
+  background: linear-gradient(to right, #0d00ff, #e600ff);
+  transform: scale(0.95);
+}
+
+#score-list-title {
+  font-size: 30px;
+}
+
+.highest-score {
+  font-size: 20px;
+  color: var(--text-light);
+}

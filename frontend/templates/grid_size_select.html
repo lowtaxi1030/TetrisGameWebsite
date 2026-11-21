@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/common.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/grid_size_select.css') }}"
+    />
+
+    <title>俄羅斯方塊</title>
+  </head>
+  <body>
+    <h1 class="title">俄羅斯方塊</h1>
+    <p class="text2">TETRIS GAME</p>
+    <section id="grid-size-selector">
+      <h2>選擇棋盤大小：</h2>
+      <div id="grid-size-list">
+        <!-- <div class="grid-size-card"></div> -->
+      </div>
+    </section>
+
+    <script
+      src="{{ url_for('static', filename='js/grid_size_select.js') }}"
+      type="module"
+    ></script>
+  </body>
+</html>

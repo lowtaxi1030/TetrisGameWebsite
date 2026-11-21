@@ -1,19 +1,23 @@
 from __future__ import annotations
 
+# import time
 from pathlib import Path
 
 import flask
+from dotenv import load_dotenv
 
-from . import config
-from . import database as db
-from .game import Game
+load_dotenv()
+
+from . import database as db  # noqa: E402
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 
-app = flask.Flask(__name__, template_folder=FRONTEND_DIR / "templates", static_folder=FRONTEND_DIR / "static")
-
-games: dict[str, Game] = {}  # "": Game(config.GRID_SIZE, config.GRID_SIZE)
+app = flask.Flask(
+    __name__,
+    template_folder=FRONTEND_DIR / "templates",
+    static_folder=FRONTEND_DIR / "static",
+)
 
 db.init_db()
 
@@ -24,60 +28,41 @@ def index():
     return flask.render_template("index.html")
 
 
-def get_game(game_id) -> Game:
-    if (game := games.get(game_id)) is None:
-        game = Game(config.GRID_SIZE, config.GRID_SIZE)
-        games[game_id] = game
-
-    return game
+@app.route("/grid_size_select")
+def grid_size_select_page():
+    return flask.render_template("grid_size_select.html")
 
 
-def get_game_data(game_id):
-    game = get_game(game_id)
-
-    return {
-        "grid": game.board.grid,
-        "score": game.score,
-        "pieces": [p.to_dict() for p in game.pieces],
-        "is_game_over": game.is_game_over,
-        "highest_score": db.get_highest_score(config.GRID_SIZE),
-    }
+@app.route("/game")
+def game_page():
+    return flask.render_template("game.html")
 
 
-def get_game_id():
-    game_id = flask.request.headers.get("X-Game-ID")
-
-    if not game_id:
-        flask.abort(400, "Missing X-Game-ID")
-
-    return game_id
+@app.route("/settings")
+def settings_page():
+    return flask.render_template("settings.html")
 
 
-@app.route("/api/game", methods=["GET"])
-def get_game_state():
-    """取得目前遊戲狀態"""
-    return get_game_data(get_game_id())
+@app.route("/api/highest-scores", methods=["GET"])
+def get_highest_scores():
+    return {"scores": db.get_all_highest_scores()}
 
 
-@app.route("/api/place", methods=["POST"])
-def place_piece():
-    """放置方塊"""
+@app.route("/api/highest-scores", methods=["POST"])
+def update_highest_score():
     result = flask.request.get_json()
+    if not isinstance(result, dict):
+        flask.abort(400, "Expected a JSON object")
 
-    game = get_game(game_id := get_game_id())
+    grid_size = result.get("grid_size")
+    score = result.get("score")
+    if type(grid_size) is not int or grid_size <= 0:
+        flask.abort(400, "grid_size must be a positive integer")
+    if type(score) is not int or score < 0:
+        flask.abort(400, "score must be a non-negative integer")
 
-    if success := game.place_piece(result["piece_id"], tuple(result["start_pos"])):
-        db.update_highest_score(config.GRID_SIZE, game.score)
-
-    return {"success_to_place": success, **get_game_data(game_id)}
-
-
-@app.route("/api/reset", methods=["POST"])
-def reset_game():
-    """重開遊戲"""
-    game = get_game(game_id := get_game_id())
-    game.reset()
-    return get_game_data(game_id)
+    db.update_highest_score(grid_size, score)
+    return {"highest_score": db.get_highest_score(grid_size)}
 
 
 app.run(host="0.0.0.0", port=5000, debug=True)

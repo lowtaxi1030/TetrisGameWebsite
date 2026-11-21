@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/common.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/game.css') }}"
+    />
+
+    <title>俄羅斯方塊</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>俄羅斯方塊</h1>
+      <p id="highest-score" class="hint1">最高分數：0</p>
+    </header>
+    <p id="score-display" class="text1">分數：0</p>
+    <div id="game-container">
+      <canvas id="game-board"></canvas>
+      <div id="game-over">
+        <h2>Game Over</h2>
+        <button id="reset-button" class="button1">重來</button>
+      </div>
+    </div>
+    <script
+      src="{{ url_for('static', filename='js/game_main.js') }}"
+      type="module"
+    ></script>
+  </body>
+</html>

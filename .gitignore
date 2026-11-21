@@ -7,3 +7,10 @@ __pycache__
 tests
 
 game.db
+
+.env
+*.env
+*.env.*
+!.env.example
+
+old*.*
